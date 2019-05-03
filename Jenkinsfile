@@ -16,7 +16,7 @@ node('master'){
 		sh "aws lambda update-function-code --function-name ${functionName} \
 			--s3-bucket ${bucket} \
 			--s3-key ${commitID()}.zip \
-			--region ${region}
+			--region ${region}"
 	}
 }
 
