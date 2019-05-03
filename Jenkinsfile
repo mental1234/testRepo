@@ -1,6 +1,6 @@
 def bucket = 'testbucket-deploy-lambda'
 def functionName = 'HelloWorldTest'
-def region = 'us-east-2'
+def region = 'us-west-2'
 
 node('master'){
 	stage('Checkout'){
