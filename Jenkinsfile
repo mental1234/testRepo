@@ -23,6 +23,6 @@ node('master'){
 def commitID() {
 	sh 'git rev-parse HEAD > .git/commitID'
 	def commitID = readFile('.git/commitID').trim()
-	sh 'rrm .git/commitID'
+	sh 'rm .git/commitID'
 	commitID
 }
