@@ -10,13 +10,17 @@ node('master'){
 		sh "zip ${commitID()}.zip helloWorld.js"
 	}
 	stage('Push'){
-		sh "aws s3 cp ${commitID()}.zip s3://${bucket}"
+		withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'JenkinsUser']]){
+			sh "aws s3 cp ${commitID()}.zip s3://${bucket}"
+		}
 	}
 	stage('Deploy'){
-		sh "aws lambda update-function-code --function-name ${functionName} \
-			--s3-bucket ${bucket} \
-			--s3-key ${commitID()}.zip \
-			--region ${region}"
+		withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'JenkinsUser']]){
+			sh "aws lambda update-function-code --function-name ${functionName} \
+				--s3-bucket ${bucket} \
+				--s3-key ${commitID()}.zip \
+				--region ${region}"
+		}
 	}
 }
 
